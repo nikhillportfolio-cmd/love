@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Default configuration
     const defaultConfig = {
-        herName: "Nitya",
+        herName: "Nibha",
         occasion: "Our Special Day",
         nickname: "My Favorite Human 💖",
         closingMessage: "Forever and always yours, with all my love ❤️"
