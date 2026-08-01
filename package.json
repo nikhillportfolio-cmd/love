@@ -1,0 +1,12 @@
+{
+  "name": "my-love",
+  "version": "1.0.0",
+  "description": "My Love static website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

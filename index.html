@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Private Love Letter 💌</title>
+    <meta name="description" content="A special personalized mobile love letter and interactive digital experience created just for you.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas for Floating Particles -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Desktop View Toggle Bar -->
+    <div class="view-controls">
+        <button id="toggleFrameBtn" class="pill-btn" title="Toggle Phone Frame View">
+            <span class="icon">📱</span> <span class="btn-text">Phone View</span>
+        </button>
+        <button id="customizeBtn" class="pill-btn highlight" title="Customize Names, Messages & Photos">
+            <span class="icon">⚙️</span> <span class="btn-text">Customize &amp; Upload Photos</span>
+        </button>
+    </div>
+
+    <!-- Main Container / Phone Mockup Wrapper -->
+    <main class="phone-frame-wrapper" id="phoneWrapper">
+        <div class="phone-frame" id="phoneFrame">
+            <!-- Hardware Buttons Mockup -->
+            <div class="phone-btn phone-btn-volume-up"></div>
+            <div class="phone-btn phone-btn-volume-down"></div>
+            <div class="phone-btn phone-btn-power"></div>
+
+            <!-- Phone Screen Viewport -->
+            <div class="phone-screen" id="phoneScreen">
+                
+                <!-- Status Bar -->
+                <header class="status-bar" id="statusBar">
+                    <div class="status-time" id="statusTime">09:41</div>
+                    <div class="dynamic-island">
+                        <div class="island-camera"></div>
+                        <div class="island-indicator"></div>
+                    </div>
+                    <div class="status-icons">
+                        <span class="icon-signal" title="Full Signal">📶</span>
+                        <span class="icon-wifi" title="Wi-Fi Connected">📶</span>
+                        <span class="icon-battery" title="99% Battery">🔋</span>
+                    </div>
+                </header>
+
+                <!-- Scrollable Main Content -->
+                <div class="scroll-container" id="scrollContainer">
+
+                    <!-- SECTION 1: OPENING / GREETING -->
+                    <section class="section opening-section reveal" id="opening">
+                        <div class="floating-badge">
+                            <span class="pulse-dot"></span> Private Message
+                        </div>
+                        <div class="opening-icon-wrapper">
+                            <div class="glowing-envelope">💌</div>
+                        </div>
+                        <h1 class="script-title">To My Dearest <span class="custom-target" data-key="herName">Nitya</span></h1>
+                        
+                        <!-- Audio Player Bar -->
+                        <div class="audio-player-card">
+                            <div class="audio-info">
+                                <span class="audio-icon pulse">🎵</span>
+                                <div class="audio-details">
+                                    <div class="audio-title">FROM ME</div>
+                                    <div class="audio-artist">Playing background melody</div>
+                                </div>
+                            </div>
+
+                            <button id="playAudioBtn" class="audio-toggle-btn" title="Play or Pause Music">
+                                <span id="audioStatusIcon">▶</span>
+                            </button>
+
+                            <audio id="bgAudio" loop preload="auto">
+                                <source src="I Wanna Be Yours.mp3" type="audio/mpeg">
+                            </audio>
+                        </div>
+
+                        <p class="occasion-tag">A secret space built just for <span class="custom-target" data-key="occasion">Our Special Day</span> ✨</p>
+                        <div class="divider-line"><span>💖</span></div>
+                        <p class="invitation-text">
+                            Swipe up to unlock... a tiny world built around my favorite person in the universe.
+                        </p>
+                        <div class="scroll-hint">
+                            <span class="arrow-bounce">↓</span>
+                            <span class="hint-label">Swipe or Scroll</span>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 2: LOCK SCREEN -->
+                    <section class="section lockscreen-section reveal" id="lockscreen">
+                        <div class="lock-wrapper" id="lockWrapper" style="background-image: url('images/photo1.jpg');">
+                            <div class="lock-overlay"></div>
+                            
+                            <!-- Lock Screen Time Header -->
+                            <div class="lock-header">
+                                <div class="lock-icon">🔒</div>
+                                <div class="lock-time" id="lockClock">09:41</div>
+                                <div class="lock-date" id="lockDate">Friday, October 24</div>
+                            </div>
+
+                            <!-- Lock Screen Notifications Stack -->
+                            <div class="notifications-stack">
+                                
+                                <div class="notification-card glass-card">
+                                    <div class="notif-header">
+                                        <span class="notif-app">📅 Calendar</span>
+                                        <span class="notif-time">Now</span>
+                                    </div>
+                                    <div class="notif-title"> First Date with My Favorite</div>
+                                    <div class="notif-body">pizza at 11 am icon plaza</div>
+                                </div>
+
+                                <div class="notification-card glass-card">
+                                    <div class="notif-header">
+                                        
+                                        <span class="notif-time">3 MONTHS 3 DAYS AGO</span>
+                                    </div>
+                                    <div class="notif-title">3 MONTHS 3 DAYS AGO Today</div>
+                                    <div class="notif-body">The day my world changed for the better forever.</div>
+                                </div>
+                            </div>
+
+                            <div class="lock-footer">
+                                <div class="quick-action-btn">🔦</div>
+                                <div class="swipe-indicator">
+                                    <span class="swipe-bar"></span>
+                                    <span class="swipe-text">Swipe to explore story</span>
+                                </div>
+                                <div class="quick-action-btn">📷</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3: CONTACT CARD -->
+                    <section class="section contact-section reveal" id="contact">
+                        <div class="section-badge">🎴 Contact Card</div>
+                        <div class="contact-card-container glass-card">
+                            <div class="avatar-wrapper">
+                                <img src="images/photo2.jpg" alt="Contact Photo" class="contact-avatar" id="avatarImg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
+                                <div class="status-dot-online" title="Always in my heart"></div>
+                            </div>
+
+                            <h2 class="contact-name custom-target" data-key="herName">[HER NAME]</h2>
+                            <p class="contact-nickname">Nickname: "<span class="custom-target" data-key="nickname">[NICKNAME]</span>"</p>
+
+                            <!-- Quick Action Buttons -->
+                            <div class="action-buttons-row">
+                                <button class="action-btn" title="Call">
+                                    <span class="btn-icon">📞</span>
+                                    <span class="btn-lbl">call</span>
+                                </button>
+                                <button class="action-btn" title="FaceTime">
+                                    <span class="btn-icon">📹</span>
+                                    <span class="btn-lbl">video</span>
+                                </button>
+                                <button class="action-btn" title="Message">
+                                    <span class="btn-icon">💬</span>
+                                    <span class="btn-lbl">message</span>
+                                </button>
+                                <button class="action-btn active" title="Favorite">
+                                    <span class="btn-icon">⭐</span>
+                                    <span class="btn-lbl">favorite</span>
+                                </button>
+                            </div>
+
+                            <!-- Custom Contact Badges & Stats -->
+                            <div class="contact-details-list">
+                                <div class="detail-item">
+                                    <span class="item-icon">📌</span>
+                                    <div class="item-text">
+                                        <div class="item-title">Pinned Favorite #1</div>
+                                        <div class="item-sub">Permanently saved at the very top of my heart</div>
+                                    </div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <span class="item-icon">🔔</span>
+                                    <div class="item-text">
+                                        <div class="item-title">Notifications: Always On</div>
+                                        <div class="item-sub">Priority 100 • Never muted, day or night</div>
+                                    </div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <span class="item-icon">⚡</span>
+                                    <div class="item-text">
+                                        <div class="item-title">Fastest Reply Guarantee</div>
+                                        <div class="item-sub">Average response time: &lt; 2.5 seconds</div>
+                                    </div>
+                                </div>
+
+                                <div class="detail-item">
+                                    <span class="item-icon">💖</span>
+                                    <div class="item-text">
+                                        <div class="item-title">Compatibility Rating</div>
+                                        <div class="item-sub">100% Soulmate Match • Lifetime Guarantee</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 4: OUR STORY TIMELINE -->
+                    <section class="section story-section reveal" id="story">
+                        <div class="section-badge">📖 Our Chapters</div>
+                        <h2 class="section-heading">Our Story So Far...</h2>
+                        <p class="section-subheading">A timeline of the moments that made us</p>
+
+                        <div class="timeline-container">
+                            <!-- Chapter 1 -->
+                            <div class="timeline-item reveal">
+                                <div class="timeline-marker">
+                                    <span class="chapter-num">01</span>
+                                    <span class="chapter-emoji">✨</span>
+                                </div>
+                                <div class="timeline-content glass-card">
+                                    <div class="chapter-meta">Chapter 01 • The Beginning</div>
+                                    <h3 class="chapter-title">Where It All Started</h3>
+                                    <div class="chapter-image-holder">
+                                        <img src="images/photo3.jpg" id="storyImg1" alt="Chapter 1" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80'">
+                                    </div>
+                                    <p class="chapter-caption">From a simple hello to conversations that lasted long into the night. I knew immediately you were special.</p>
+                                </div>
+                            </div>
+
+                            <!-- Chapter 2 -->
+                            <div class="timeline-item reveal">
+                                <div class="timeline-marker">
+                                    <span class="chapter-num">02</span>
+                                    <span class="chapter-emoji">☕</span>
+                                </div>
+                                <div class="timeline-content glass-card">
+                                    <div class="chapter-meta">Chapter 02 • First Date</div>
+                                    <h3 class="chapter-title">First Date Butterflies</h3>
+                                    <div class="chapter-image-holder">
+                                        <img src="images/photo4.jpg" id="storyImg2" alt="Chapter 2" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80'">
+                                    </div>
+                                    <p class="chapter-caption">Movie date, endless smiles, and time somehow flying by way too fast. My heart knew right then.</p>
+                                </div>
+                            </div>
+
+                            <!-- Chapter 3 -->
+                            <div class="timeline-item reveal">
+                                <div class="timeline-marker">
+                                    <span class="chapter-num">03</span>
+                                    <span class="chapter-emoji">✈️</span>
+                                </div>
+                                <div class="timeline-content glass-card">
+                                    <div class="chapter-meta">Chapter 03 • GOODBYES</div>
+                                   
+                                    <div class="chapter-image-holder">
+                                        <img src="images/photo5.jpg" id="storyImg3" alt="Chapter 3" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80'">
+                                    </div>
+                                    <p class="chapter-caption">Dropping you home and realizing I never want to say goodbye to you😢</p>
+                                </div>
+                            </div>
+
+                           
+                            <!-- Chapter 6: Final Open Ended -->
+                            <div class="timeline-item final-chapter reveal">
+                                <div class="timeline-marker infinity">
+                                    <span class="chapter-num">∞</span>
+                                    <span class="chapter-emoji">🔮</span>
+                                </div>
+                                <div class="timeline-content glass-card glow-card">
+                                    <div class="chapter-meta">Chapter ∞ • Today & Forever</div>
+                                    <h3 class="chapter-title">The Best Is Yet To Come</h3>
+                                    <p class="chapter-caption">This story has no ending — just endless new pages waiting for us to fill together.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 5: THE NOTE -->
+                    <section class="section note-section reveal" id="note">
+                        <div class="section-badge">📝 Notes App</div>
+                        <div class="notes-app-container">
+                            <div class="notes-header-bar">
+                                <div class="notes-back">‹ All Notes</div>
+                                <div class="notes-actions">
+                                    <span class="notes-icon">📤</span>
+                                    <span class="notes-icon">📌</span>
+                                </div>
+                            </div>
+
+                            <div class="notes-body">
+                               
+                                <h2 class="notes-title">Things I Love About You 💛</h2>
+
+                                <ul class="notes-list">
+                                    <li class="notes-item">
+                                        <span class="check-box checked">✓</span>
+                                        <span class="note-text">The soft, genuine way your eyes crinkle when I makes you really laugh.</span>
+                                    </li>
+                                    <li class="notes-item">
+                                        <span class="check-box checked">✓</span>
+                                        <span class="note-text">How you remember the smallest, quietest details about people you care about.</span>
+                                    </li>
+                                    <li class="notes-item">
+                                        <span class="check-box checked">✓</span>
+                                        <span class="note-text">Your warm, comforting Talks that make every stressful day dissolve instantly.</span>
+                                    </li>
+                                    <li class="notes-item">
+                                        <span class="check-box checked">✓</span>
+                                        <span class="note-text">Your contagious excitement and passion when you talk about things you love.</span>
+                                    
+                                    <li class="notes-item">
+                                        <span class="check-box checked">✓</span>
+                                        <span class="note-text">Your cute anger when I tease you.</span>
+                                    </li>
+                                    <li class="notes-item">
+                                        <span class="check-box checked">✓</span>
+                                        <span class="note-text">Simply being my safest, warmest, and happiest place on earth.</span>
+                                    </li>
+                                </ul>
+
+                                <div class="notes-footer-tag">
+                                    <i>Stored safely in my heart forever.</i>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 6: FINALE -->
+                    <section class="section finale-section reveal" id="finale">
+                        <div class="finale-card glass-card">
+                            <div class="finale-heart-icon">💋</div>
+                            <h2 class="finale-title">Tap For A Kiss!</h2>
+                            <p class="finale-sub">Send infinite affection straight across the screen</p>
+
+                            <!-- Interactive Kiss Button -->
+                            <button id="kissBtn" class="kiss-button">
+                                <span class="kiss-emoji">💋</span>
+                                <span class="kiss-label">Tap Me!</span>
+                            </button>
+
+                            <div class="kiss-counter-badge">
+                                Kisses Sent: <span id="kissCount">0</span> 💖
+                            </div>
+
+                            <div class="signoff-box">
+                                <p class="closing-message custom-target" data-key="closingMessage">
+                                    "Forever and always yours, with all my heart. <br>Happy <span class="custom-target" data-key="occasion">[OCCASION]</span>, my love! ❤️"
+                                </p>
+                                <div class="signature custom-target" data-key="herName">For [HER NAME]</div>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <footer class="app-footer">
+                            Made with endless love &amp; magic ✨
+                        </footer>
+                    </section>
+
+                </div> <!-- End Scroll Container -->
+
+                <!-- Home Indicator Bar -->
+                <div class="home-indicator"></div>
+
+            </div> <!-- End Phone Screen -->
+        </div> <!-- End Phone Frame -->
+    </main>
+
+    <!-- CUSTOMIZER DRAWER MODAL -->
+    <div class="customizer-overlay" id="customizerOverlay">
+        <div class="customizer-drawer">
+            <div class="drawer-header">
+                <h3>⚙️ Personalize Names &amp; Upload Photos</h3>
+                <button class="close-drawer-btn" id="closeDrawerBtn">&times;</button>
+            </div>
+            <div class="drawer-body">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" id="tabTextBtn">📝 Text &amp; Names</button>
+                    <button class="tab-btn" id="tabImagesBtn">🖼️ Upload Photos</button>
+                </div>
+
+                <!-- TAB 1: TEXT & NAMES -->
+                <div class="tab-content active" id="tabTextContent">
+                    <div class="form-group">
+                        <label for="inputHerName">Her Name:</label>
+                        <input type="text" id="inputHerName" value="Nitya" placeholder="e.g. Nitya">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputOccasion">Occasion:</label>
+                        <input type="text" id="inputOccasion" value="Our Anniversary" placeholder="e.g. Our Anniversary, Birthday, Valentine's">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputNickname">Contact Nickname:</label>
+                        <input type="text" id="inputNickname" value="My Favorite Human 💖" placeholder="e.g. MVP, Home, The Good One">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputClosing">Closing Sign-off Message:</label>
+                        <textarea id="inputClosing" rows="3" placeholder="Closing love note...">Forever & always yours, with all my love ❤️</textarea>
+                    </div>
+                </div>
+
+                <!-- TAB 2: UPLOAD PHOTOS -->
+                <div class="tab-content" id="tabImagesContent">
+                    <p class="tab-hint">Upload your own photos directly from your phone or computer!</p>
+
+                    <div class="form-group image-upload-group">
+                        <label for="uploadPhoto1">🔒 Lock Screen Wallpaper:</label>
+                        <input type="file" id="uploadPhoto1" accept="image/*">
+                        <span class="file-status" id="statusPhoto1">Default: photo1.jpg</span>
+                    </div>
+
+                    <div class="form-group image-upload-group">
+                        <label for="uploadPhoto2">👤 Contact Card Avatar:</label>
+                        <input type="file" id="uploadPhoto2" accept="image/*">
+                        <span class="file-status" id="statusPhoto2">Default: photo2.jpg</span>
+                    </div>
+
+                    <div class="form-group image-upload-group">
+                        <label for="uploadPhoto3">✨ Story Chapter 1 Photo:</label>
+                        <input type="file" id="uploadPhoto3" accept="image/*">
+                        <span class="file-status" id="statusPhoto3">Default: photo3.jpg</span>
+                    </div>
+
+                    <div class="form-group image-upload-group">
+                        <label for="uploadPhoto4">☕ Story Chapter 2 Photo:</label>
+                        <input type="file" id="uploadPhoto4" accept="image/*">
+                        <span class="file-status" id="statusPhoto4">Default: photo4.jpg</span>
+                    </div>
+
+                    <div class="form-group image-upload-group">
+                        <label for="uploadPhoto5">✈️ Story Chapter 3 Photo:</label>
+                        <input type="file" id="uploadPhoto5" accept="image/*">
+                        <span class="file-status" id="statusPhoto5">Default: photo5.jpg</span>
+                    </div>
+                </div>
+
+                <div class="drawer-actions">
+                    <button id="saveCustomBtn" class="primary-btn">Save &amp; Update Live</button>
+                    <button id="resetCustomBtn" class="secondary-btn">Reset All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
