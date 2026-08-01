@@ -1,12 +1,17 @@
 {
   "name": "my-love",
   "version": "1.0.0",
-  "description": "My Love static website",
+  "description": "My Love static website and interactive mobile experience",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "echo 'No build step required for static assets'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC"
 }
+

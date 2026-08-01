@@ -24,8 +24,11 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  // Handle health check endpoint for Render
-  if (req.url === '/health' || req.url === '/healthz') {
+  // CORS & Security headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Handle health check endpoints for cloud platforms (Render, Railway, Fly.io)
+  if (req.url === '/health' || req.url === '/healthz' || req.url === '/ping') {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('OK');
     return;
@@ -33,7 +36,6 @@ const server = http.createServer((req, res) => {
 
   let reqPath = '/';
   try {
-    // Strip query string and decode URI safely
     const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     reqPath = decodeURIComponent(parsedUrl.pathname);
   } catch (e) {
@@ -42,27 +44,24 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Normalize path and prevent directory traversal
-  let safePath = path.normalize(reqPath).replace(/^(\.\.[\/\\])+/, '');
-  if (safePath === '/' || safePath === '\\' || safePath === '.') {
-    safePath = '/index.html';
+  // Sanitize relative path
+  let safeRelativePath = reqPath.replace(/^[\/\\]+/, '');
+  if (!safeRelativePath || safeRelativePath === '.') {
+    safeRelativePath = 'index.html';
   }
 
-  let filePath = path.join(__dirname, safePath);
+  let filePath = path.join(__dirname, safeRelativePath);
 
-  // Security check: Ensure requested path stays within __dirname
+  // Prevent directory traversal
   if (!filePath.startsWith(__dirname)) {
     res.writeHead(403, { 'Content-Type': 'text/plain' });
     res.end('403 Forbidden');
     return;
   }
 
-  const ext = path.extname(filePath).toLowerCase();
-  const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-
   fs.stat(filePath, (statErr, stats) => {
     if (statErr || !stats.isFile()) {
-      // If it's a specific asset (css, js, images, fonts, etc.) that doesn't exist, return 404
+      const ext = path.extname(filePath).toLowerCase();
       if (ext && ext !== '.html') {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('404 Not Found');
@@ -83,19 +82,48 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    // Serve the requested file
-    fs.readFile(filePath, (readErr, content) => {
-      if (readErr) {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end(`500 Internal Server Error: ${readErr.code}`);
-      } else {
-        res.writeHead(200, { 'Content-Type': contentType });
-        res.end(content);
+    const ext = path.extname(filePath).toLowerCase();
+    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    const fileSize = stats.size;
+    const range = req.headers.range;
+
+    // Support HTTP Range Requests (crucial for audio/video seeking on iOS / Safari / Chrome)
+    if (range && (ext === '.mp3' || ext === '.mp4')) {
+      const parts = range.replace(/bytes=/, '').split('-');
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+
+      if (start >= fileSize || end >= fileSize) {
+        res.writeHead(416, {
+          'Content-Range': `bytes */${fileSize}`
+        });
+        res.end();
+        return;
       }
-    });
+
+      const chunksize = (end - start) + 1;
+      const fileStream = fs.createReadStream(filePath, { start, end });
+      res.writeHead(206, {
+        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunksize,
+        'Content-Type': contentType,
+        'Cache-Control': 'public, max-age=31536000'
+      });
+      fileStream.pipe(res);
+    } else {
+      res.writeHead(200, {
+        'Content-Length': fileSize,
+        'Content-Type': contentType,
+        'Accept-Ranges': 'bytes',
+        'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=86400'
+      });
+      fs.createReadStream(filePath).pipe(res);
+    }
   });
 });
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
