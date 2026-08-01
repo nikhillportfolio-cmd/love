@@ -304,15 +304,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const defaultImages = {
-        photo1: "images/photo1.jpg",
-        photo2: "images/photo2.jpg",
-        photo3: "images/photo3.jpg",
-        photo4: "images/photo4.jpg",
-        photo5: "images/photo5.jpg"
+        photo1: "images/photo1.jpeg",
+        photo2: "images/photo2.jpeg",
+        photo3: "images/photo3.jpeg",
+        photo4: "images/photo4.jpeg",
+        photo5: "images/photo5.jpeg"
     };
 
     let currentConfig = JSON.parse(localStorage.getItem('love_letter_config')) || defaultConfig;
     let customImages = JSON.parse(localStorage.getItem('love_letter_images')) || defaultImages;
+
+    // Automatically migrate old default .jpg paths to .jpeg if stored in localStorage
+    for (let key in customImages) {
+        if (typeof customImages[key] === 'string' && customImages[key].includes('images/photo') && customImages[key].endsWith('.jpg')) {
+            customImages[key] = customImages[key].replace(/\.jpg$/, '.jpeg');
+        }
+    }
 
     function applyConfig(cfg) {
         document.querySelectorAll('.custom-target').forEach(el => {

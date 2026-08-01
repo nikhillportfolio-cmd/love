@@ -95,7 +95,7 @@
 
                     <!-- SECTION 2: LOCK SCREEN -->
                     <section class="section lockscreen-section reveal" id="lockscreen">
-                        <div class="lock-wrapper" id="lockWrapper" style="background-image: url('images/photo1.jpg');">
+                        <div class="lock-wrapper" id="lockWrapper" style="background-image: url('images/photo1.jpeg');">
                             <div class="lock-overlay"></div>
                             
                             <!-- Lock Screen Time Header -->
@@ -143,7 +143,7 @@
                         <div class="section-badge">🎴 Contact Card</div>
                         <div class="contact-card-container glass-card">
                             <div class="avatar-wrapper">
-                                <img src="images/photo2.jpg" alt="Contact Photo" class="contact-avatar" id="avatarImg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
+                                <img src="images/photo2.jpeg" alt="Contact Photo" class="contact-avatar" id="avatarImg" onerror="if(this.src.endsWith('.jpeg')){this.src='images/photo2.jpg';}else{this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80';}">
                                 <div class="status-dot-online" title="Always in my heart"></div>
                             </div>
 
@@ -224,7 +224,7 @@
                                     <div class="chapter-meta">Chapter 01 • The Beginning</div>
                                     <h3 class="chapter-title">Where It All Started</h3>
                                     <div class="chapter-image-holder">
-                                        <img src="images/photo3.jpg" id="storyImg1" alt="Chapter 1" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80'">
+                                        <img src="images/photo3.jpeg" id="storyImg1" alt="Chapter 1" onerror="if(this.src.endsWith('.jpeg')){this.src='images/photo3.jpg';}else{this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80';}">
                                     </div>
                                     <p class="chapter-caption">From a simple hello to conversations that lasted long into the night. I knew immediately you were special.</p>
                                 </div>
@@ -240,7 +240,7 @@
                                     <div class="chapter-meta">Chapter 02 • First Date</div>
                                     <h3 class="chapter-title">First Date Butterflies</h3>
                                     <div class="chapter-image-holder">
-                                        <img src="images/photo4.jpg" id="storyImg2" alt="Chapter 2" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80'">
+                                        <img src="images/photo4.jpeg" id="storyImg2" alt="Chapter 2" onerror="if(this.src.endsWith('.jpeg')){this.src='images/photo4.jpg';}else{this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80';}">
                                     </div>
                                     <p class="chapter-caption">Movie date, endless smiles, and time somehow flying by way too fast. My heart knew right then.</p>
                                 </div>
@@ -256,7 +256,7 @@
                                     <div class="chapter-meta">Chapter 03 • GOODBYES</div>
                                    
                                     <div class="chapter-image-holder">
-                                        <img src="images/photo5.jpg" id="storyImg3" alt="Chapter 3" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80'">
+                                        <img src="images/photo5.jpeg" id="storyImg3" alt="Chapter 3" onerror="if(this.src.endsWith('.jpeg')){this.src='images/photo5.jpg';}else{this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80';}">
                                     </div>
                                     <p class="chapter-caption">Dropping you home and realizing I never want to say goodbye to you😢</p>
                                 </div>
@@ -411,31 +411,31 @@
                     <div class="form-group image-upload-group">
                         <label for="uploadPhoto1">🔒 Lock Screen Wallpaper:</label>
                         <input type="file" id="uploadPhoto1" accept="image/*">
-                        <span class="file-status" id="statusPhoto1">Default: photo1.jpg</span>
+                        <span class="file-status" id="statusPhoto1">Default: photo1.jpeg</span>
                     </div>
 
                     <div class="form-group image-upload-group">
                         <label for="uploadPhoto2">👤 Contact Card Avatar:</label>
                         <input type="file" id="uploadPhoto2" accept="image/*">
-                        <span class="file-status" id="statusPhoto2">Default: photo2.jpg</span>
+                        <span class="file-status" id="statusPhoto2">Default: photo2.jpeg</span>
                     </div>
 
                     <div class="form-group image-upload-group">
                         <label for="uploadPhoto3">✨ Story Chapter 1 Photo:</label>
                         <input type="file" id="uploadPhoto3" accept="image/*">
-                        <span class="file-status" id="statusPhoto3">Default: photo3.jpg</span>
+                        <span class="file-status" id="statusPhoto3">Default: photo3.jpeg</span>
                     </div>
 
                     <div class="form-group image-upload-group">
                         <label for="uploadPhoto4">☕ Story Chapter 2 Photo:</label>
                         <input type="file" id="uploadPhoto4" accept="image/*">
-                        <span class="file-status" id="statusPhoto4">Default: photo4.jpg</span>
+                        <span class="file-status" id="statusPhoto4">Default: photo4.jpeg</span>
                     </div>
 
                     <div class="form-group image-upload-group">
                         <label for="uploadPhoto5">✈️ Story Chapter 3 Photo:</label>
                         <input type="file" id="uploadPhoto5" accept="image/*">
-                        <span class="file-status" id="statusPhoto5">Default: photo5.jpg</span>
+                        <span class="file-status" id="statusPhoto5">Default: photo5.jpeg</span>
                     </div>
                 </div>
 

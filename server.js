@@ -59,68 +59,81 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  fs.stat(filePath, (statErr, stats) => {
-    if (statErr || !stats.isFile()) {
-      const ext = path.extname(filePath).toLowerCase();
-      if (ext && ext !== '.html') {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('404 Not Found');
-        return;
-      }
-
-      // Fallback to index.html for SPA/HTML navigation
-      const indexPath = path.join(__dirname, 'index.html');
-      fs.readFile(indexPath, (indexErr, indexContent) => {
-        if (indexErr) {
+  const serveFile = (targetPath) => {
+    fs.stat(targetPath, (statErr, stats) => {
+      if (statErr || !stats.isFile()) {
+        const ext = path.extname(targetPath).toLowerCase();
+        if (ext && ext !== '.html') {
+          if (['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) {
+            const altExts = ['.jpeg', '.jpg', '.png', '.webp'].filter(e => e !== ext);
+            for (const altExt of altExts) {
+              const altPath = targetPath.slice(0, -ext.length) + altExt;
+              if (fs.existsSync(altPath)) {
+                return serveFile(altPath);
+              }
+            }
+          }
           res.writeHead(404, { 'Content-Type': 'text/plain' });
           res.end('404 Not Found');
-        } else {
-          res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-          res.end(indexContent);
+          return;
         }
-      });
-      return;
-    }
 
-    const ext = path.extname(filePath).toLowerCase();
-    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-    const fileSize = stats.size;
-    const range = req.headers.range;
-
-    // Support HTTP Range Requests (crucial for audio/video seeking on iOS / Safari / Chrome)
-    if (range && (ext === '.mp3' || ext === '.mp4')) {
-      const parts = range.replace(/bytes=/, '').split('-');
-      const start = parseInt(parts[0], 10);
-      const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-
-      if (start >= fileSize || end >= fileSize) {
-        res.writeHead(416, {
-          'Content-Range': `bytes */${fileSize}`
+        // Fallback to index.html for SPA/HTML navigation
+        const indexPath = path.join(__dirname, 'index.html');
+        fs.readFile(indexPath, (indexErr, indexContent) => {
+          if (indexErr) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('404 Not Found');
+          } else {
+            res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.end(indexContent);
+          }
         });
-        res.end();
         return;
       }
 
-      const chunksize = (end - start) + 1;
-      const fileStream = fs.createReadStream(filePath, { start, end });
-      res.writeHead(206, {
-        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-        'Accept-Ranges': 'bytes',
-        'Content-Length': chunksize,
-        'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=31536000'
-      });
-      fileStream.pipe(res);
-    } else {
-      res.writeHead(200, {
-        'Content-Length': fileSize,
-        'Content-Type': contentType,
-        'Accept-Ranges': 'bytes',
-        'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=86400'
-      });
-      fs.createReadStream(filePath).pipe(res);
-    }
-  });
+      const ext = path.extname(targetPath).toLowerCase();
+      const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+      const fileSize = stats.size;
+      const range = req.headers.range;
+
+      // Support HTTP Range Requests (crucial for audio/video seeking on iOS / Safari / Chrome)
+      if (range && (ext === '.mp3' || ext === '.mp4')) {
+        const parts = range.replace(/bytes=/, '').split('-');
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+
+        if (start >= fileSize || end >= fileSize) {
+          res.writeHead(416, {
+            'Content-Range': `bytes */${fileSize}`
+          });
+          res.end();
+          return;
+        }
+
+        const chunksize = (end - start) + 1;
+        const fileStream = fs.createReadStream(targetPath, { start, end });
+        res.writeHead(206, {
+          'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+          'Accept-Ranges': 'bytes',
+          'Content-Length': chunksize,
+          'Content-Type': contentType,
+          'Cache-Control': 'public, max-age=31536000'
+        });
+        fileStream.pipe(res);
+      } else {
+        res.writeHead(200, {
+          'Content-Length': fileSize,
+          'Content-Type': contentType,
+          'Accept-Ranges': 'bytes',
+          'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=86400'
+        });
+        fs.createReadStream(targetPath).pipe(res);
+      }
+    });
+  };
+
+  serveFile(filePath);
 });
 
 server.listen(PORT, '0.0.0.0', () => {
